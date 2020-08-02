@@ -74,6 +74,8 @@ export default class Game extends Phaser.Scene
         this.fauna.anims.play('fauna-run-side')
 
         this.physics.add.collider(this.fauna, wallsLayer)
+
+        this.cameras.main.startFollow(this.fauna, true)
     }
 
     update(t:number , dt:number){
