@@ -18,7 +18,7 @@ export default class Game extends Phaser.Scene{
     create()
     {
         const map = this.make.tilemap({key:'dungeon'})
-        const tileset = map.addTilesetImage('dungeon_tiles','tiles')
+        const tileset = map.addTilesetImage('dungeon_tiles','tiles',16,16,1,2)
 
         map.createStaticLayer('Ground', tileset)
         const wallsLayer =map.createStaticLayer('Wall', tileset)
@@ -26,7 +26,6 @@ export default class Game extends Phaser.Scene{
         wallsLayer.setCollisionByProperty({collides:true})
         
         debugDraw(wallsLayer, this)
-        
 
          this.fauna = this.physics.add.sprite(120,120,'fauna','walk-down-3.png')
          this.fauna.body.setSize(this.fauna.width * 0.5, this.fauna.height * 0.8)
