@@ -41,12 +41,12 @@ export default class Game extends Phaser.Scene
 
         this.anims.create({
             key:'fauna-idle-up',
-            frames:[{key:'fauna', frame:'walk-down-3.png'}]
+            frames:[{key:'fauna', frame:'walk-up-3.png'}]
         })
 
         this.anims.create({
             key:'fauna-idle-side',
-            frames:[{key:'fauna', frame:'walk-down-3.png'}]
+            frames:[{key:'fauna', frame:'walk-side-3.png'}]
         })
 
         this.anims.create({
@@ -110,7 +110,11 @@ export default class Game extends Phaser.Scene
             this.fauna.setVelocity(0, speed)
 
         }else{
-            this.fauna.anims.play('fauna-idle-down')
+            const parts = this.fauna.anims.currentAnim.key.split('-')
+            parts[1] ='idle';
+            this.fauna.anims.play(parts.join('-'))
+            console.log(parts)
+            console.log(parts.join('-'))
             this.fauna.setVelocity(0,0)
         }
     }
