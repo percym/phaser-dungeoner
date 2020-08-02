@@ -32,6 +32,7 @@ export default class Game extends Phaser.Scene
         })
 
          this.fauna = this.physics.add.sprite(120,120,'fauna','walk-down-3.png')
+         this.fauna.body.setSize(this.fauna.width * 0.5, this.fauna.height * 0.8)
          this.anims.create({
             key:'fauna-idle-down',
             frames:[{key:'fauna', frame:'walk-down-3.png'}]
@@ -71,6 +72,8 @@ export default class Game extends Phaser.Scene
         })
 
         this.fauna.anims.play('fauna-run-side')
+
+        this.physics.add.collider(this.fauna, wallsLayer)
     }
 
     update(t:number , dt:number){
@@ -80,27 +83,29 @@ export default class Game extends Phaser.Scene
         const speed =100
 
         if(this.cursorKeys.left?.isDown){
+
             this.fauna.anims.play('fauna-run-side',true)
             this.fauna.setVelocity(-speed,0);
             this.fauna.scaleX = -1
-            
+            this.fauna.body.offset.x = 24
+
         }else if(this.cursorKeys.right?.isDown){
             
             this.fauna.anims.play('fauna-run-side',true)
             this.fauna.setVelocity(speed, 0)
             this.fauna.scaleX = 1
+            this.fauna.body.offset.x = 8
 
         }else if(this.cursorKeys.up?.isDown){
             
             this.fauna.anims.play('fauna-run-up',true)
             this.fauna.setVelocity(0, -speed)
-            this.fauna.scaleX = 1
+        
 
         }else if(this.cursorKeys.down?.isDown){
 
             this.fauna.anims.play('fauna-run-down',true)
             this.fauna.setVelocity(0, speed)
-            this.fauna.scaleX = 1
 
         }else{
             this.fauna.anims.play('fauna-idle-down')
