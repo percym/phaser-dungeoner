@@ -1,0 +1,3 @@
+ // const lizard = this.physics.add.sprite(256,128, 'lizard','lizard_m_idle_anim_f0.png')
+               
+        // lizard.anims.play('lizard-run')

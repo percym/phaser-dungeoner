@@ -40,7 +40,7 @@ export default class Game extends Phaser.Scene{
 
         this.cameras.main.startFollow(this.fauna, true)
 
-        this.physics.add.collider(this.fauna, wallsLayer)
+      
 
 
         const lizards = this.physics.add.group({
@@ -48,9 +48,9 @@ export default class Game extends Phaser.Scene{
         })
 
         lizards.get(256, 128,'lizard')
-        // const lizard = this.physics.add.sprite(256,128, 'lizard','lizard_m_idle_anim_f0.png')
-               
-        // lizard.anims.play('lizard-run')
+        this.physics.add.collider(this.fauna, wallsLayer)
+        this.physics.add.collider(lizards, wallsLayer)
+       
     }
 
     update(t:number , dt:number){
