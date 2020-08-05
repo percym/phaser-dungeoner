@@ -2,6 +2,11 @@ import Phaser from 'phaser'
 
 const createCharacterAnims=(anims:Phaser.Animations.AnimationManager)=>{
 
+    anims.create({
+        key:'fauna-idle-down',
+        frames:[{key:'fauna', frame:'walk-down-3.png'}]
+    })
+
 
     anims.create({
         key:'fauna-idle-up',

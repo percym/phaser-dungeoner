@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 import {debugDraw} from '../utils/debug'
 import {createLizardAnims} from '../anims/EnemyAnims'
 import {createCharacterAnims} from '../anims/CharacterAnimations'
+import Lizard from '../enemies/Lizard'
 
 export default class Game extends Phaser.Scene{
     private cursorKeys !: Phaser.Types.Input.Keyboard.CursorKeys
@@ -22,9 +23,10 @@ export default class Game extends Phaser.Scene{
     {
         createLizardAnims(this.anims)
         createCharacterAnims(this.anims)
+        
         const map = this.make.tilemap({key:'dungeon'})
         const tileset = map.addTilesetImage('dungeon_tiles','tiles',16,16,1,2)
-
+        
         map.createStaticLayer('Ground', tileset)
         const wallsLayer =map.createStaticLayer('Wall', tileset)
 
@@ -32,23 +34,23 @@ export default class Game extends Phaser.Scene{
         
         // debugDraw(wallsLayer, this)
 
-         this.fauna = this.physics.add.sprite(120,120,'fauna','walk-down-3.png')
-         this.fauna.body.setSize(this.fauna.width * 0.5, this.fauna.height * 0.8)
-         this.anims.create({
-            key:'fauna-idle-down',
-            frames:[{key:'fauna', frame:'walk-down-3.png'}]
-        })
-
-
+        this.fauna = this.physics.add.sprite(120,120,'fauna','walk-down-3.png')
+        this.fauna.body.setSize(this.fauna.width * 0.5, this.fauna.height * 0.8)
         this.fauna.anims.play('fauna-run-side')
-
-        this.physics.add.collider(this.fauna, wallsLayer)
 
         this.cameras.main.startFollow(this.fauna, true)
 
-        const lizard = this.physics.add.sprite(256,128, 'lizard','lizard_m_idle_anim_f0.png')
+        this.physics.add.collider(this.fauna, wallsLayer)
+
+
+        const lizards = this.physics.add.group({
+            classType:Lizard
+        })
+
+        lizards.get(256, 128,'lizard')
+        // const lizard = this.physics.add.sprite(256,128, 'lizard','lizard_m_idle_anim_f0.png')
                
-        lizard.anims.play('lizard-run')
+        // lizard.anims.play('lizard-run')
     }
 
     update(t:number , dt:number){
