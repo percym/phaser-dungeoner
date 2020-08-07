@@ -7,8 +7,13 @@ export default class Lizard extends Phaser.Physics.Arcade.Sprite{
     constructor(scene : Phaser.Scene, x:number , y:number , texture:string , frame?:string | number ){
         super(scene, x ,y ,texture,frame)
         this.anims.play('lizard-run')
+        scene.physics.world.on(Phaser.Physics.Arcade.Events.COLLIDE, this.handleCollision, this)
     }
 
+    private handleCollision(go : Phaser.GameObjects.GameObject, tile:Phaser.Tilemaps.Tile){
+        
+
+    }
     preUpdate(t:number, dt:number){
         super.preUpdate(t,dt)
 
