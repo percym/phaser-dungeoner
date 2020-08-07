@@ -37,14 +37,15 @@ export default class Game extends Phaser.Scene{
         this.fauna = this.physics.add.sprite(120,120,'fauna','walk-down-3.png')
         this.fauna.body.setSize(this.fauna.width * 0.5, this.fauna.height * 0.8)
         this.fauna.anims.play('fauna-run-side')
-
         this.cameras.main.startFollow(this.fauna, true)
 
-      
-
-
         const lizards = this.physics.add.group({
-            classType:Lizard
+            classType:Lizard,
+            createCallback: (go) =>{
+                const lizGo = go as Lizard
+                lizGo.body.onCollide = true
+
+            }
         })
 
         lizards.get(256, 128,'lizard')
