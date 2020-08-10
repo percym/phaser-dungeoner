@@ -89,8 +89,6 @@ export default class Game extends Phaser.Scene{
             const parts = this.fauna.anims.currentAnim.key.split('-')
             parts[1] ='idle';
             this.fauna.anims.play(parts.join('-'))
-            console.log(parts)
-            console.log(parts.join('-'))
             this.fauna.setVelocity(0,0)
         }
     }
