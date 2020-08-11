@@ -37,9 +37,7 @@ export default class Game extends Phaser.Scene{
         // debugDraw(wallsLayer, this)
 
         this.fauna =this.add.fauna(128,128,'fauna')
-        // this.fauna = this.physics.add.sprite(120,120,'fauna','walk-down-3.png')
-        // this.fauna.body.setSize(this.fauna.width * 0.5, this.fauna.height * 0.8)
-        // this.fauna.anims.play('fauna-run-side')
+    
         this.cameras.main.startFollow(this.fauna, true)
 
         const lizards = this.physics.add.group({
@@ -86,42 +84,10 @@ export default class Game extends Phaser.Scene{
             return
         }
 
-        if(!this.cursorKeys || !this.fauna){
-            return
+        if(this.fauna){
+            this.fauna.update(this.cursorKeys)
         }
-        const speed =100
-
-        if(this.cursorKeys.left?.isDown){
-
-            this.fauna.anims.play('fauna-run-side',true)
-            this.fauna.setVelocity(-speed,0);
-            this.fauna.scaleX = -1
-            this.fauna.body.offset.x = 24
-
-        }else if(this.cursorKeys.right?.isDown){
-            
-            this.fauna.anims.play('fauna-run-side',true)
-            this.fauna.setVelocity(speed, 0)
-            this.fauna.scaleX = 1
-            this.fauna.body.offset.x = 8
-
-        }else if(this.cursorKeys.up?.isDown){
-            
-            this.fauna.anims.play('fauna-run-up',true)
-            this.fauna.setVelocity(0, -speed)
-        
-
-        }else if(this.cursorKeys.down?.isDown){
-
-            this.fauna.anims.play('fauna-run-down',true)
-            this.fauna.setVelocity(0, speed)
-
-        }else{
-            const parts = this.fauna.anims.currentAnim.key.split('-')
-            parts[1] ='idle';
-            this.fauna.anims.play(parts.join('-'))
-            this.fauna.setVelocity(0,0)
-        }
+      
     }
 
 }

@@ -12,10 +12,48 @@ declare global{
 export default class Fauna extends Phaser.Physics.Arcade.Sprite{
     constructor(scene:Phaser.Scene, x:number, y:number,texture:string , frame?:string|number){
         super(scene, x, y , texture,frame)
-        // this.body.setSize(this.width * 0.5, this.height * 0.8)
+       
         this.anims.play('fauna-run-side')
     }
 
+    update(cursors:Phaser.Types.Input.Keyboard.CursorKeys){
+        if(!cursors ){
+            return
+        }
+        const speed =100
+
+        if(cursors.left?.isDown){
+
+           this.anims.play('fauna-run-side',true)
+           this.setVelocity(-speed,0);
+           this.scaleX = -1
+           this.body.offset.x = 24
+
+        }else if(cursors.right?.isDown){
+            
+           this.anims.play('fauna-run-side',true)
+           this.setVelocity(speed, 0)
+           this.scaleX = 1
+           this.body.offset.x = 8
+
+        }else if(cursors.up?.isDown){
+            
+           this.anims.play('fauna-run-up',true)
+           this.setVelocity(0, -speed)
+        
+
+        }else if(cursors.down?.isDown){
+
+            this.anims.play('fauna-run-down',true)
+            this.setVelocity(0, speed)
+
+        }else{
+            const parts =this.anims.currentAnim.key.split('-')
+            parts[1] ='idle';
+            this.anims.play(parts.join('-'))
+            this.setVelocity(0,0)
+        }
+    }
 
 }
 
@@ -26,6 +64,7 @@ Phaser.GameObjects.GameObjectFactory.register('fauna',function(this:Phaser.GameO
     this.updateList.add(sprite)
 
     this.scene.physics.world.enableBody(sprite, Phaser.Physics.Arcade.DYNAMIC_BODY)
+    sprite.body.setSize(sprite.width * 0.5, sprite.height * 0.8)
 
     return sprite
 
