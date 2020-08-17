@@ -5,10 +5,11 @@ import {createLizardAnims} from '../anims/EnemyAnims'
 import {createCharacterAnims} from '../anims/CharacterAnimations'
 import Lizard from '../enemies/Lizard'
 import   '../Characters/Fauna'
+import Fauna from '../Characters/Fauna'
 
 export default class Game extends Phaser.Scene{
     private cursorKeys !: Phaser.Types.Input.Keyboard.CursorKeys
-    private fauna !: Phaser.Physics.Arcade.Sprite
+    private fauna !: Fauna
     private hit = 0 
 
 	constructor()
@@ -23,6 +24,7 @@ export default class Game extends Phaser.Scene{
 
     create()
     {
+        this.scene.run('game-ui')
         createLizardAnims(this.anims)
         createCharacterAnims(this.anims)
         
@@ -69,21 +71,11 @@ export default class Game extends Phaser.Scene{
 
         const dir = new  Phaser.Math.Vector2(dx,dy).normalize().scale(200)
 
-        this.fauna.setVelocity(dir.x, dir.y)
-
-        this.hit =1
+        this.fauna.handledamage(dir)
     }
 
     update(t:number , dt:number){
-        
-        if(this.hit > 0){
-            ++this.hit
-            if(this.hit > 10){
-                this.hit =0
-            }
-            return
-        }
-
+    
         if(this.fauna){
             this.fauna.update(this.cursorKeys)
         }
