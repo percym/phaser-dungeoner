@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 
 import Game from './scenes/Game'
 import PreLoader from './scenes/PreLoader'
-import GameUI from './GameUI'
+import GameUI from './scenes/GameUI'
 
 
 export default new Phaser.Game({

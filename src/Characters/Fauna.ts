@@ -15,14 +15,25 @@ enum HeathState {
 export default class Fauna extends Phaser.Physics.Arcade.Sprite {
 
     private heathState = HeathState.IDLE
-    private damageTime = 0;
+    private damageTime = 0
+
+    private _health = 3
+
+
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
         super(scene, x, y, texture, frame)
 
         this.anims.play('fauna-run-side')
     }
 
+    get health(){
+        return this._health
+    }
+
     handledamage(dir: Phaser.Math.Vector2) {
+        if(this._health <=0){
+            return
+        }
         if (this.heathState === HeathState.DAMAGE) {
             return
         }
@@ -30,6 +41,12 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
         this.setTint(0xff0000)
         this.heathState = HeathState.DAMAGE
         this.damageTime = 0
+        --this._health
+
+        if(this._health <=0){
+
+            //die
+        }
     }
 
     preUpdate(t: number, dt: number) {
