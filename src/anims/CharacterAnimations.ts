@@ -40,6 +40,12 @@ const createCharacterAnims=(anims:Phaser.Animations.AnimationManager)=>{
         frameRate:15 
     })
 
+    anims.create({
+        key:'fauna-faint',
+        frames:anims.generateFrameNames('fauna',{start:1, end:4, prefix:'faint-', suffix:'.png'}),
+        repeat: 0,
+        frameRate:15 
+    })
 }
 
     export{

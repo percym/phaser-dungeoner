@@ -12,6 +12,7 @@ export default class Game extends Phaser.Scene{
     private cursorKeys !: Phaser.Types.Input.Keyboard.CursorKeys
     private fauna !: Fauna
     private hit = 0 
+    private playerLizardCollider ?: Phaser.Physics.Arcade.Collider
 
 	constructor()
 	{
@@ -56,7 +57,7 @@ export default class Game extends Phaser.Scene{
         this.physics.add.collider(this.fauna, wallsLayer)
         this.physics.add.collider(lizards, wallsLayer)
        
-        this.physics.add.collider(lizards, this.fauna, this.handlePlayerLizardCollision,undefined,this)  
+        this.playerLizardCollider= this.physics.add.collider(lizards, this.fauna, this.handlePlayerLizardCollision,undefined,this)  
     
     }
 
@@ -75,6 +76,10 @@ export default class Game extends Phaser.Scene{
         this.fauna.handledamage(dir)
 
         sceneEvents.emit('player-health-changed',this.fauna.health)
+
+        if(this.fauna.health <= 0 ){
+            this.playerLizardCollider?.destroy()
+        }
     }
 
     update(t:number , dt:number){
