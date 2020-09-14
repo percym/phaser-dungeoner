@@ -20,6 +20,7 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
 
     private _health = 3
 
+    private knives ?: Phaser.Physics.Arcade.Group
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
         super(scene, x, y, texture, frame)
@@ -31,6 +32,41 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
         return this._health
     }
 
+    setKnives(knives: Phaser.Physics.Arcade.Group){
+        this.knives= knives;
+
+    }
+
+    private throwKnives(){
+        if(!this.knives){
+            return
+        }
+        const parts= this.anims.currentAnim.key.split('-')
+        console.log(parts)
+        const direction = parts[2]
+
+        const vec = new Phaser.Math.Vector2(0,0)
+
+        switch(direction){
+            case 'up':
+                vec.y =-1
+                break
+                case 'down':
+                    vec.y = 1
+                    break   
+                    case 'side':
+                        if(this.scaleX < 0){
+                            vec.x =-1
+                        }else{
+                            vec.x = 1
+                        }
+                        break 
+        }
+        const angle = vec.angle()
+        const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image
+        knife.setRotation(angle)
+        knife.setVelocity(vec.x *300 , vec.y * 300)
+    }
     handledamage(dir: Phaser.Math.Vector2) {
         if(this._health <=0){
             return
@@ -78,6 +114,12 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
             return
         }
         if (!cursors) {
+            return
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(cursors.space!)){
+
+            this.throwKnives()
             return
         }
         const speed = 100

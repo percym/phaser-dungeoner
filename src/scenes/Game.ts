@@ -9,6 +9,7 @@ import Fauna from '../Characters/Fauna'
 import {sceneEvents} from '../events/EventsCenter'
 
 export default class Game extends Phaser.Scene{
+
     private cursorKeys !: Phaser.Types.Input.Keyboard.CursorKeys
     private fauna !: Fauna
     private hit = 0 
@@ -40,9 +41,16 @@ export default class Game extends Phaser.Scene{
         
         // debugDraw(wallsLayer, this)
 
+            
+        const knives = this.physics.add.group({
+            classType:Phaser.Physics.Arcade.Image
+        })
+
         this.fauna =this.add.fauna(128,128,'fauna')
+        this.fauna.setKnives(knives)
     
         this.cameras.main.startFollow(this.fauna, true)
+    
 
         const lizards = this.physics.add.group({
             classType:Lizard,
@@ -56,9 +64,21 @@ export default class Game extends Phaser.Scene{
         lizards.get(256, 128,'lizard')
         this.physics.add.collider(this.fauna, wallsLayer)
         this.physics.add.collider(lizards, wallsLayer)
+        this.physics.add.collider(knives, wallsLayer, this.handleKnivesAndWallsCollision, undefined, this)
+        this.physics.add.collider(knives, lizards, this.handlePlayerLizardCollision, undefined , this)
        
-        this.playerLizardCollider= this.physics.add.collider(lizards, this.fauna, this.handlePlayerLizardCollision,undefined,this)  
+        this.playerLizardCollider = this.physics.add.collider(lizards, this.fauna, this.handlePlayerLizardCollision,undefined,this)  
+        this.playerLizardCollider
     
+    }
+   private handleKnivesAndWallsCollision(knives: Phaser.Physics.Arcade.Group, wallsLayer: Phaser.Tilemaps.StaticTilemapLayer) {
+    console.dir(knives)
+    console.dir(wallsLayer)
+    }
+
+    private handleKnivesAndLizardCollision(obj1: Phaser.GameObjects.GameObject , obj2: Phaser.GameObjects.GameObject){
+        console.dir(obj1)
+        console.dir(obj2)
     }
 
     private handlePlayerLizardCollision(obj1:Phaser.GameObjects.GameObject, obj2:Phaser.GameObjects.GameObject){
