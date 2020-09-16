@@ -64,7 +64,11 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
         }
         const angle = vec.angle()
         const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image
+        knife.setActive(true)
         knife.setRotation(angle)
+        knife.setVisible(true)
+        knife.x += vec.x *16;
+        knife.y += vec.y *16;
         knife.setVelocity(vec.x *300 , vec.y * 300)
     }
     handledamage(dir: Phaser.Math.Vector2) {

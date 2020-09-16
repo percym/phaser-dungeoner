@@ -32,10 +32,8 @@ export default class GameUI extends Phaser.Scene{
 
     private handlePlayerHealthChanged(health:number){
         this.hearts.children.each((go,idx)=>{
-            
+    
             const heart = go as Phaser.GameObjects.Image
-            console.log("idx => ", idx)
-            console.log("health => ", health)
             if(idx < health){
                 heart.setTexture('ui-heart-full')
             }else{
