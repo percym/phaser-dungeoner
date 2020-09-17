@@ -8,7 +8,7 @@ const createTreasureChestAnimations=(anims:Phaser.Animations.AnimationManager)=>
     })
 
     anims.create({
-        key:'chest-open',
+        key:'chest-closed',
         frames:[{key: 'treasure', frame:'chest_empty_open_anim_f0.png'}]
     })
 }

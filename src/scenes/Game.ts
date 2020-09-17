@@ -36,6 +36,7 @@ export default class Game extends Phaser.Scene{
         this.scene.run('game-ui')
         createLizardAnims(this.anims)
         createCharacterAnims(this.anims)
+        createTreasureChestAnimations(this.anims)
         
         const map = this.make.tilemap({key:'dungeon'})
         const tileset = map.addTilesetImage('dungeon_tiles','tiles',16,16,1,2)

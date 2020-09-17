@@ -11,7 +11,7 @@ const createCharacterAnims=(anims:Phaser.Animations.AnimationManager)=>{
     anims.create({
         key:'fauna-idle-up',
         frames:[{key:'fauna', frame:'walk-up-3.png'}]
-    }) n
+    }) 
 
     anims.create({
         key:'fauna-idle-side',
