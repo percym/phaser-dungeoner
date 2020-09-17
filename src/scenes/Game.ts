@@ -46,6 +46,11 @@ export default class Game extends Phaser.Scene{
 
         wallsLayer.setCollisionByProperty({collides:true})
 
+        const chests = this.physics.add.staticGroup()
+        const chestsLayer = map.getObjectLayer('Chests')
+        chestsLayer.objects.forEach(chestObj=>{
+            chests.get(chestObj.x, chestObj.y - chestObj.height * 0.5 ,'treasure','chest_empty_open_anim_f0.png')
+        })
         const chest = this.add.sprite(64,64,'treasure','chest_empty_open_anim_f0.png')
         this.time.delayedCall(1000,()=>{
             chest.play('chest-open')

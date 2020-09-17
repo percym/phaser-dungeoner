@@ -24,9 +24,56 @@
          "width":100,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":3,
+         "name":"Chests",
+         "objects":[
+                {
+                 "gid":59,
+                 "height":16,
+                 "id":1,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":227,
+                 "y":45
+                }, 
+                {
+                 "gid":59,
+                 "height":16,
+                 "id":2,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":651.5,
+                 "y":239.5
+                }, 
+                {
+                 "gid":59,
+                 "height":16,
+                 "id":3,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":32.5,
+                 "y":382
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":3,
- "nextobjectid":1,
+ "nextlayerid":4,
+ "nextobjectid":4,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.0",
@@ -35,7 +82,7 @@
         {
          "columns":10,
          "firstgid":1,
-         "image":"..\/public\/tiles\/dungeon_tiles.png",
+         "image":"dungeon_tiles.png",
          "imageheight":256,
          "imagewidth":160,
          "margin":0,
