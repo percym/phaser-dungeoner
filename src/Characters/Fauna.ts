@@ -54,6 +54,7 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
         if (!knife){
             return 0
         }
+
         
         const parts= this.anims.currentAnim.key.split('-')
         console.log(parts)
