@@ -1,4 +1,4 @@
-import Phaser from 'phaser'
+import Phaser, { Scenes } from 'phaser'
 import {sceneEvents} from '../events/EventsCenter'
 
 export default class GameUI extends Phaser.Scene{
@@ -11,6 +11,12 @@ export default class GameUI extends Phaser.Scene{
     }
 
     create(){
+        const coinsLabel = this.add.text(5,16, '0')
+
+        sceneEvents.on('player-coins-changed',(coins:number)=>{
+            coinsLabel.text =coins.toString()
+        })
+
         this.hearts = this.add.group({
             classType:Phaser.GameObjects.Image
         })  
@@ -26,7 +32,8 @@ export default class GameUI extends Phaser.Scene{
         })
         sceneEvents.on('player-health-changed',this.handlePlayerHealthChanged, this)
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, ()=>{
-            sceneEvents.off('player-health-changed')
+            sceneEvents.off('player-health-changed',this.handlePlayerHealthChanged,this)
+            sceneEvents.off('player-coins-changed')
         })
     }
 

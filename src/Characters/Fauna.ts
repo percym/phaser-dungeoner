@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import Chest from '../items/Chest'
+import {sceneEvents}  from '../events/EventsCenter'
 
 declare global {
     namespace Phaser.GameObjects {
@@ -134,7 +135,7 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
             if(this.activateChest){
                 const coins = this.activateChest.open()
                 this._coins += coins
-                console.dir(this._coins)
+                sceneEvents.emit('player-coins-changed',this._coins)
             }else{
                 this.throwKnives()
             }
