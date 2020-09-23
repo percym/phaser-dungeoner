@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import Chest from '../items/Chest'
 
 declare global {
     namespace Phaser.GameObjects {
@@ -19,8 +20,10 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
     private damageTime = 0
 
     private _health = 3
+    private _coins = 0
 
     private knives ?: Phaser.Physics.Arcade.Group
+    private activateChest?: Chest
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
         super(scene, x, y, texture, frame)
@@ -34,6 +37,11 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
 
     setKnives(knives: Phaser.Physics.Arcade.Group){
         this.knives= knives;
+
+    }
+
+    setChest(chest:Chest){
+        this.activateChest= chest
 
     }
 
@@ -123,32 +131,42 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
 
         if(Phaser.Input.Keyboard.JustDown(cursors.space!)){
 
-            this.throwKnives()
+            if(this.activateChest){
+                const coins = this.activateChest.open()
+                this._coins += coins
+                console.dir(this._coins)
+            }else{
+                this.throwKnives()
+            }
             return
         }
         const speed = 100
 
-        if (cursors.left?.isDown) {
+        const leftDown = cursors.left?.isDown
+        const rightDown = cursors.right?.isDown
+        const upDown = cursors.up?.isDown
+        const downDown = cursors.down?.isDown
+        if (leftDown) {
 
             this.anims.play('fauna-run-side', true)
             this.setVelocity(-speed, 0);
             this.scaleX = -1
             this.body.offset.x = 24
 
-        } else if (cursors.right?.isDown) {
+        } else if (rightDown) {
 
             this.anims.play('fauna-run-side', true)
             this.setVelocity(speed, 0)
             this.scaleX = 1
             this.body.offset.x = 8
 
-        } else if (cursors.up?.isDown) {
+        } else if (upDown) {
 
             this.anims.play('fauna-run-up', true)
             this.setVelocity(0, -speed)
 
 
-        } else if (cursors.down?.isDown) {
+        } else if (downDown) {
 
             this.anims.play('fauna-run-down', true)
             this.setVelocity(0, speed)
@@ -158,6 +176,10 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
             parts[1] = 'idle';
             this.anims.play(parts.join('-'))
             this.setVelocity(0, 0)
+        }
+
+        if(leftDown || rightDown || upDown || downDown){
+            this.activateChest= undefined
         }
     }
 

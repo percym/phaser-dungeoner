@@ -9,6 +9,7 @@ import Lizard from '../enemies/Lizard'
 import   '../Characters/Fauna'
 import Fauna from '../Characters/Fauna'
 import {sceneEvents} from '../events/EventsCenter'
+import Chest from '../items/Chest'
 
 export default class Game extends Phaser.Scene{
 
@@ -46,14 +47,12 @@ export default class Game extends Phaser.Scene{
 
         wallsLayer.setCollisionByProperty({collides:true})
 
-        const chests = this.physics.add.staticGroup()
+        const chests = this.physics.add.staticGroup({
+            classType:Chest
+        })
         const chestsLayer = map.getObjectLayer('Chests')
         chestsLayer.objects.forEach(chestObj=>{
-            chests.get(chestObj.x, chestObj.y - chestObj.height * 0.5 ,'treasure','chest_empty_open_anim_f0.png')
-        })
-        const chest = this.add.sprite(64,64,'treasure','chest_empty_open_anim_f0.png')
-        this.time.delayedCall(1000,()=>{
-            chest.play('chest-open')
+            chests.get(chestObj.x! + chestObj.width! * 0.5, chestObj.y! - chestObj.height! * 0.5 ,'treasure')
         })
         
         // debugDraw(wallsLayer, this)
@@ -82,6 +81,7 @@ export default class Game extends Phaser.Scene{
         this.physics.add.collider(this.fauna, wallsLayer)
         this.physics.add.collider(this.lizards, wallsLayer)
         this.physics.add.collider(this.knives, wallsLayer, this.handleKnivesAndWallsCollision, undefined, this)
+        this.physics.add.collider(this.fauna, chests, this.handlePlayerChestCollision, undefined,this )
         
         this.lizardKnivesCollider = this.physics.add.collider(this.knives, this.lizards, this.handleKnivesAndLizardCollision, undefined , this)
        
@@ -123,6 +123,15 @@ export default class Game extends Phaser.Scene{
             this.playerLizardCollider?.destroy()
 
         }
+    }
+
+    private handlePlayerChestCollision(obj1:Phaser.GameObjects.GameObject, obj2:Phaser.GameObjects.GameObject){
+
+        console.dir(obj1)
+        console.dir(obj2)
+        const chest = obj2 as Chest
+        this.fauna.setChest(chest)
+     
     }
 
     update(t:number , dt:number){

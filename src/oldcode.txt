@@ -1,3 +1,15 @@
- // const lizard = this.physics.add.sprite(256,128, 'lizard','lizard_m_idle_anim_f0.png')
-               
-        // lizard.anims.play('lizard-run')
+// const lizard = this.physics.add.sprite(256,128, 'lizard','lizard_m_idle_anim_f0.png')
+// lizard.anims.play('lizard-run')
+
+
+const chest = this.add.sprite(64,64,'treasure','chest_empty_open_anim_f0.png')
+this.time.delayedCall(1000,()=>{
+chest.play('chest-open')
+ })
+
+     get coins(){
+        if(this.anims.currentAnim.key !== 'chest-closed'){
+            return 0
+        }
+        return Phaser.Math.Between(50, 200)
+    }
