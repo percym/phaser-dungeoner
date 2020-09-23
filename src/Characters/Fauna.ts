@@ -50,6 +50,11 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
         if(!this.knives){
             return
         }
+        const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image
+        if (!knife){
+            return 0
+        }
+        
         const parts= this.anims.currentAnim.key.split('-')
         console.log(parts)
         const direction = parts[2]
@@ -72,7 +77,7 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
                         break 
         }
         const angle = vec.angle()
-        const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image
+     
         knife.setActive(true)
         knife.setRotation(angle)
         knife.setVisible(true)

@@ -59,7 +59,8 @@ export default class Game extends Phaser.Scene{
 
             
          this.knives = this.physics.add.group({
-            classType:Phaser.Physics.Arcade.Image
+            classType:Phaser.Physics.Arcade.Image,
+            maxSize:3
         })
 
         this.fauna =this.add.fauna(128,128,'fauna')
@@ -67,7 +68,7 @@ export default class Game extends Phaser.Scene{
     
         this.cameras.main.startFollow(this.fauna, true)
     
-
+          
          this.lizards = this.physics.add.group({
             classType:Lizard,
             createCallback: (go) =>{
@@ -77,7 +78,12 @@ export default class Game extends Phaser.Scene{
             }
         })
 
-        this.lizards.get(256, 128,'lizard')
+        const lizardsLayer = map.getObjectLayer('Lizards')
+        lizardsLayer.objects.forEach(lizObj => {
+           this.lizards.get(lizObj.x! + lizObj.width! * 0.5 , lizObj.y! - lizObj.height! * 0.5 ,'lizard')
+
+        }) 
+        
         this.physics.add.collider(this.fauna, wallsLayer)
         this.physics.add.collider(this.lizards, wallsLayer)
         this.physics.add.collider(this.knives, wallsLayer, this.handleKnivesAndWallsCollision, undefined, this)
